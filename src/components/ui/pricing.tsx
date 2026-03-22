@@ -143,28 +143,35 @@ export function Pricing({
               <p className="text-base font-semibold text-muted-foreground">
                 {plan.name}
               </p>
-              <div className="mt-6 flex items-center justify-center gap-x-2">
-                <span className="text-5xl font-bold tracking-tight text-foreground">
-                  <NumberFlow
-                    value={
-                      isMonthly ? Number(plan.price) : Number(plan.yearlyPrice)
-                    }
-                    format={{
-                      style: "currency",
-                      currency: "RUB",
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    }}
-                    transformTiming={{
-                      duration: 500,
-                      easing: "ease-out",
-                    }}
-                    className="font-variant-numeric: tabular-nums"
-                  />
-                </span>
-                {plan.period !== "Next 3 months" && (
-                  <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground">
-                    / {plan.period}
+              <div className="mt-6 flex flex-col items-center justify-center">
+                <div className="flex items-center gap-x-2">
+                  <span className="text-5xl font-bold tracking-tight text-foreground">
+                    <NumberFlow
+                      value={
+                        isMonthly ? Number(plan.price) : Number(plan.yearlyPrice)
+                      }
+                      format={{
+                        style: "currency",
+                        currency: "RUB",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      }}
+                      transformTiming={{
+                        duration: 500,
+                        easing: "ease-out",
+                      }}
+                      className="font-variant-numeric: tabular-nums"
+                    />
+                  </span>
+                  {plan.period !== "Next 3 months" && (
+                    <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground">
+                      / {plan.period}
+                    </span>
+                  )}
+                </div>
+                {!isMonthly && (
+                  <span className="text-sm text-muted-foreground line-through mt-1">
+                    {Number(plan.price).toLocaleString("ru-RU")} &#8381;/мес
                   </span>
                 )}
               </div>

@@ -15,9 +15,13 @@ interface NavItem {
 interface NavBarProps {
   items: NavItem[]
   className?: string
+  ctaButton?: {
+    text: string
+    href: string
+  }
 }
 
-export function NavBar({ items, className }: NavBarProps) {
+export function NavBar({ items, className, ctaButton }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name)
   const [isMobile, setIsMobile] = useState(false)
 
@@ -79,6 +83,16 @@ export function NavBar({ items, className }: NavBarProps) {
             </Link>
           )
         })}
+        {ctaButton && (
+          <a
+            href={ctaButton.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:inline-flex items-center rounded-full bg-[#7C3AED] px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-[#6D28D9] hover:scale-105"
+          >
+            {ctaButton.text}
+          </a>
+        )}
       </div>
     </div>
   )

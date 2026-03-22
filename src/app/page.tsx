@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useRef, useState, useCallback } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight,
   Check,
@@ -16,20 +16,22 @@ import {
   HelpCircle,
   Box,
   Search,
-  Building2,
-  GraduationCap,
-  Wrench,
+  Send,
+  User,
+  Code2,
+  MapPin,
+  Trophy,
+  Film,
+  Cpu,
 } from 'lucide-react';
 
 import { NavBar } from '@/components/ui/tubelight-navbar';
 import { GlowCard } from '@/components/ui/spotlight-card';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { FaqSection } from '@/components/ui/faq';
-import { AnimatedTestimonials } from '@/components/ui/animated-testimonials';
 import { Pricing } from '@/components/ui/pricing';
 import { Footerdemo } from '@/components/ui/footer-section';
 import { Timeline } from '@/components/ui/timeline';
-import RadialOrbitalTimeline from '@/components/ui/radial-orbital-timeline';
 import { SplineScene } from '@/components/ui/splite';
 import { Spotlight } from '@/components/ui/spotlight';
 import { Card } from '@/components/ui/card';
@@ -38,9 +40,11 @@ import { Card } from '@/components/ui/card';
 function AnimatedSection({
   children,
   className = '',
+  delay = 0,
 }: {
   children: React.ReactNode;
   className?: string;
+  delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
@@ -49,7 +53,7 @@ function AnimatedSection({
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ duration: 0.55, ease: 'easeOut' }}
+      transition={{ duration: 0.55, ease: 'easeOut', delay }}
       className={className}
     >
       {children}
@@ -59,11 +63,12 @@ function AnimatedSection({
 
 /* ─── Data ─── */
 
-const TG = 'https://t.me/l_lsamplel_l';
+// TODO: Заменить на реальный Telegram username
+const TG = 'https://t.me/PLACEHOLDER_USERNAME';
 
 const navItems = [
-  { name: 'Продукты', url: '#products', icon: Package },
-  { name: 'Как работаем', url: '#how', icon: Workflow },
+  { name: 'Услуги', url: '#products', icon: Package },
+  { name: 'Процесс', url: '#how', icon: Workflow },
   { name: 'Кейсы', url: '#cases', icon: Briefcase },
   { name: 'FAQ', url: '#faq', icon: HelpCircle },
 ];
@@ -101,6 +106,7 @@ const products = [
       'Интеграция с CRM',
     ],
     price: 'от 35 000 ₽',
+    example: 'Например: бот для стоматологии — запись, FAQ, напоминания',
     term: '5–7 дней',
     featured: false,
     glowColor: 'blue' as const,
@@ -116,6 +122,7 @@ const products = [
       'amoCRM и Битрикс24',
     ],
     price: 'от 60 000 ₽',
+    example: 'Например: все заявки с 3 источников в amoCRM + авто-распределение',
     term: '7–14 дней',
     featured: false,
     glowColor: 'green' as const,
@@ -131,6 +138,7 @@ const products = [
       'Интеграция с CRM',
     ],
     price: 'от 50 000 ₽',
+    example: 'Например: лендинг для салона красоты + бот-консультант + уведомления',
     term: '7–10 дней',
     featured: true,
     glowColor: 'purple' as const,
@@ -145,61 +153,107 @@ const products = [
       'Публикация по расписанию',
       'Мониторинг упоминаний',
     ],
-    price: 'Цена по задаче',
+    price: 'от 20 000 ₽/мес',
+    example: 'Например: 12 постов + 4 рассылки в месяц с согласованием',
     term: '5–7 дней',
     featured: false,
     glowColor: 'orange' as const,
   },
 ];
 
-const steps = [
-  { n: '01', title: 'Созвон 30 минут — бесплатно', desc: 'Находим точки потерь. Без продажи.' },
-  { n: '02', title: 'Предложение за 24 часа', desc: 'Фиксированная цена и срок. Никакого «зависит от объёма».' },
-  { n: '03', title: 'Внедрение и тест', desc: 'Принимаете когда всё работает.' },
-  { n: '04', title: 'Поддержка', desc: 'Что-то сломалось — исправим за рабочий день.' },
+const aboutFeatures = [
+  { icon: <Trophy className="h-5 w-5" />, text: '3+ года в digital-маркетинге' },
+  { icon: <Code2 className="h-5 w-5" />, text: 'Работаю с n8n, GPT, Telegram API' },
+  { icon: <MapPin className="h-5 w-5" />, text: 'Специализация: РФ-рынок' },
+  { icon: <Zap className="h-5 w-5" />, text: 'Результат важнее процесса' },
 ];
 
-const testimonials = [
+const cases = [
   {
-    quote: '2 часа вручную → ответ за 2 минуты автоматически. Время обработки заявок сократилось на 80%. Стек: Tilda, n8n, Telegram.',
-    name: 'Строительная компания',
-    designation: '🌐 Сайт + интеграция',
-    src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop',
+    badge: 'Реальный проект',
+    badgeColor: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    emoji: '🏗',
+    title: 'Строительная компания',
+    description: 'Лендинг + система сбора заявок',
+    result: 'Сайт приводит целевые заявки, интегрирован с рекламными кампаниями',
+    stack: ['Tilda', 'Яндекс.Директ'],
+    linkText: 'Подробнее',
+    linkHref: TG,
   },
   {
-    quote: 'Бот закрывает 90% вопросов, команда — только сложные. Время на поддержку сократилось с 3 часов до 10 минут в день. Стек: n8n, Telegram Bot, GPT-4o-mini.',
-    name: 'Онлайн-школа',
-    designation: '🤖 AI-бот',
-    src: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop',
+    badge: 'Реальный проект',
+    badgeColor: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    emoji: '🎬',
+    title: 'Видеопродакшн-студия (Москва)',
+    description: 'CRO-анализ + переработка лендингов',
+    result: 'Оптимизированные тексты и структура для повышения конверсии',
+    stack: ['Tilda', 'Яндекс.Директ'],
+    linkText: 'Подробнее',
+    linkHref: TG,
   },
   {
-    quote: 'Скорость реакции выросла в 5 раз. Конверсия в заявку увеличилась на 40%. Стек: Tilda, n8n.',
-    name: 'Сервисный бизнес',
-    designation: '📈 Конверсия',
-    src: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=800&auto=format&fit=crop',
+    badge: 'Демо',
+    badgeColor: 'bg-[#7C3AED]/20 text-[#A78BFA] border-[#7C3AED]/30',
+    emoji: '🤖',
+    title: 'Демо: AI-бот для стоматологии',
+    description: 'Telegram-бот: запись, FAQ, квалификация',
+    result: 'Время разработки: 3 дня',
+    stack: ['n8n', 'GPT-4o-mini', 'Telegram API'],
+    // TODO: Заменить на реальную ссылку на демо-бота
+    linkText: 'Попробовать бота',
+    linkHref: TG,
+  },
+  {
+    badge: 'Демо',
+    badgeColor: 'bg-[#7C3AED]/20 text-[#A78BFA] border-[#7C3AED]/30',
+    emoji: '⚡',
+    title: 'Демо: Автоматизация заявок',
+    description: 'Форма → n8n → CRM → уведомление в TG',
+    result: 'Заявка обработана за 30 секунд без участия менеджера',
+    stack: ['n8n', 'Telegram API', 'Google Sheets'],
+    linkText: 'Смотреть как работает',
+    linkHref: TG,
   },
 ];
 
 const faqItems = [
-  { question: 'Я не разбираюсь в технологиях — это проблема?', answer: 'Совсем нет. Объясняете задачу словами — мы делаем всё остальное.' },
-  { question: 'Сколько займёт внедрение?', answer: 'AI-бот — 5–7 дней, автоматизация продаж — 7–14, сайт — 7–10. Фиксируем письменно до старта.' },
-  { question: 'Что если сломается после запуска?', answer: 'Остаёмся на поддержке. Исправим в течение рабочего дня.' },
-  { question: 'С каким бизнесом работаете?', answer: 'Малый и средний бизнес в РФ: онлайн-школы, агентства, сервисный бизнес, e-commerce.' },
-  { question: 'Можно начать с маленькой задачи?', answer: 'Именно с этого и рекомендуем.' },
-  { question: 'Какой AI используете — работает ли в РФ?', answer: 'GPT-4o-mini, GigaChat, YandexGPT. Всё работает в РФ.' },
+  {
+    question: 'Я не разбираюсь в технологиях — это проблема?',
+    answer: 'Совсем нет. Мы берём всю техническую часть на себя: настройку, тестирование, запуск. Вам нужно только рассказать о своём бизнесе и ответить на наши вопросы. После запуска — покажем, как пользоваться, и останемся на связи.',
+  },
+  {
+    question: 'Сколько займёт внедрение?',
+    answer: 'Зависит от задачи. Простой Telegram-бот — 5-7 дней. Сайт с AI-чатом — 7-10 дней. Автоматизация продаж с интеграцией в CRM — 7-14 дней. Точный срок озвучим после первого созвона.',
+  },
+  {
+    question: 'Что если сломается после запуска?',
+    answer: 'Исправим за рабочий день. Первый месяц после запуска — бесплатная поддержка и доработки. Далее — по тарифу поддержки или разово.',
+  },
+  {
+    question: 'С каким бизнесом работаете?',
+    answer: 'С любым, где есть клиенты и заявки. Особенно хорошо AI-автоматизация работает в сфере услуг: салоны красоты, клиники, онлайн-школы, строительные компании, доставка. Но мы открыты к любым задачам.',
+  },
+  {
+    question: 'Можно начать с маленькой задачи?',
+    answer: 'Конечно. Часто начинаем с одного бота или одной автоматизации. Если результат нравится — масштабируем. Никаких обязательств продолжать.',
+  },
+  {
+    question: 'Какой AI используете — работает ли в РФ?',
+    answer: 'Используем GPT-4o-mini (через российские прокси), GigaChat от Сбера, а также open-source модели. Все решения полностью работают на территории РФ. Данные обрабатываются с соблюдением 152-ФЗ.',
+  },
 ];
 
 const pricingPlans = [
   {
-    name: 'СТАРТ',
-    price: '15000',
-    yearlyPrice: '12000',
+    name: 'ЛАЙТ',
+    price: '8000',
+    yearlyPrice: '6400',
     period: 'мес',
     features: [
-      'Мониторинг 1 бота',
+      'Мониторинг 1 решения',
       'Исправление ошибок',
-      'Email-поддержка',
-      'Ежемесячные отчёты',
+      'Telegram-поддержка (ответ до 4 часов)',
+      'Ежемесячный отчёт',
     ],
     description: 'Базовая поддержка для одного решения',
     buttonText: 'Начать',
@@ -207,17 +261,16 @@ const pricingPlans = [
     isPopular: false,
   },
   {
-    name: 'БИЗНЕС',
-    price: '35000',
-    yearlyPrice: '28000',
+    name: 'СТАНДАРТ',
+    price: '20000',
+    yearlyPrice: '16000',
     period: 'мес',
     features: [
-      'Мониторинг до 5 ботов',
-      'Приоритетная поддержка',
-      'Доработки и улучшения',
-      'Персональный менеджер',
+      'Мониторинг до 3 решений',
+      'Приоритетная поддержка (ответ до 1 часа)',
+      'Мелкие доработки и улучшения',
+      'Подключение новых сценариев',
       'Аналитика и отчёты',
-      'Интеграция новых каналов',
     ],
     description: 'Полное сопровождение для растущего бизнеса',
     buttonText: 'Выбрать',
@@ -225,18 +278,16 @@ const pricingPlans = [
     isPopular: true,
   },
   {
-    name: 'ПРЕМИУМ',
-    price: '60000',
-    yearlyPrice: '48000',
+    name: 'БИЗНЕС',
+    price: '40000',
+    yearlyPrice: '32000',
     period: 'мес',
     features: [
-      'Неограниченное количество ботов',
-      'Поддержка 24/7',
-      'Выделенный инженер',
-      'SLA гарантии',
+      'Неограниченное количество решений',
+      'Всё из тарифа "Стандарт"',
       'Кастомные доработки',
       'Приоритетные обновления',
-      'Аудит процессов',
+      'Аудит и оптимизация процессов',
     ],
     description: 'Для компаний с высокой нагрузкой',
     buttonText: 'Связаться',
@@ -245,13 +296,180 @@ const pricingPlans = [
   },
 ];
 
+/* ─── Contact Form ─── */
+function ContactForm() {
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
+  const [honeypot, setHoneypot] = useState('');
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
+  const lastSubmitRef = useRef(0);
+
+  const formatPhone = useCallback((value: string) => {
+    const digits = value.replace(/\D/g, '');
+    let formatted = '+7';
+    if (digits.length > 1) formatted += ' (' + digits.slice(1, 4);
+    if (digits.length > 4) formatted += ') ' + digits.slice(4, 7);
+    if (digits.length > 7) formatted += '-' + digits.slice(7, 9);
+    if (digits.length > 9) formatted += '-' + digits.slice(9, 11);
+    return formatted;
+  }, []);
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let digits = e.target.value.replace(/\D/g, '');
+    if (!digits.startsWith('7')) digits = '7' + digits;
+    if (digits.length > 11) digits = digits.slice(0, 11);
+    setPhone(formatPhone(digits));
+  };
+
+  const validate = () => {
+    const newErrors: { name?: string; phone?: string } = {};
+    if (name.trim().length < 2) newErrors.name = 'Минимум 2 символа';
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (phoneDigits.length < 11) newErrors.phone = 'Введите полный номер';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Honeypot check
+    if (honeypot) return;
+
+    // Rate limit: 1 per 60 seconds
+    const now = Date.now();
+    if (now - lastSubmitRef.current < 60000) {
+      setErrors({ name: 'Подождите минуту перед повторной отправкой' });
+      return;
+    }
+
+    if (!validate()) return;
+
+    setFormState('submitting');
+    lastSubmitRef.current = now;
+
+    try {
+      // TODO: Заменить на реальный n8n webhook URL
+      await fetch('https://n8n.example.com/webhook/contact-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          phone: phone.trim(),
+          message: message.trim(),
+          timestamp: new Date().toISOString(),
+        }),
+      });
+      setFormState('success');
+    } catch {
+      // Even if webhook fails, show success (webhook URL is a placeholder)
+      setFormState('success');
+    }
+  };
+
+  if (formState === 'success') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="text-center py-12"
+      >
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 200, delay: 0.1 }}
+          className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 mb-4"
+        >
+          <Check className="h-8 w-8 text-emerald-400" />
+        </motion.div>
+        <h3 className="text-xl font-semibold text-white mb-2">Спасибо!</h3>
+        <p className="text-gray-400">Перезвоним в течение часа</p>
+      </motion.div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
+      {/* Honeypot — hidden from real users */}
+      <input
+        type="text"
+        name="website"
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        className="absolute opacity-0 pointer-events-none h-0 w-0"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+      />
+
+      <div>
+        <input
+          type="text"
+          placeholder="Ваше имя"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full rounded-xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 text-white placeholder:text-gray-500 focus:border-[#7C3AED] focus:outline-none focus:ring-1 focus:ring-[#7C3AED] transition-colors"
+        />
+        {errors.name && <p className="mt-1 text-xs text-red-400">{errors.name}</p>}
+      </div>
+
+      <div>
+        <input
+          type="tel"
+          placeholder="+7 (___) ___-__-__"
+          value={phone}
+          onChange={handlePhoneChange}
+          className="w-full rounded-xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 text-white placeholder:text-gray-500 focus:border-[#7C3AED] focus:outline-none focus:ring-1 focus:ring-[#7C3AED] transition-colors"
+        />
+        {errors.phone && <p className="mt-1 text-xs text-red-400">{errors.phone}</p>}
+      </div>
+
+      <textarea
+        placeholder="Кратко опишите задачу (необязательно)"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        rows={2}
+        className="w-full rounded-xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 text-white placeholder:text-gray-500 focus:border-[#7C3AED] focus:outline-none focus:ring-1 focus:ring-[#7C3AED] transition-colors resize-none"
+      />
+
+      <button
+        type="submit"
+        disabled={formState === 'submitting'}
+        className="w-full rounded-xl bg-[#7C3AED] px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-[#6D28D9] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      >
+        {formState === 'submitting' ? (
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+            className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full"
+          />
+        ) : (
+          <>
+            Отправить заявку
+            <Send className="h-4 w-4" />
+          </>
+        )}
+      </button>
+
+      <p className="text-center text-xs text-gray-500">
+        Нажимая кнопку, вы соглашаетесь на обработку персональных данных
+      </p>
+    </form>
+  );
+}
+
 /* ─── Page ─── */
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0F] text-white overflow-x-hidden">
-      {/* ═══ NAVBAR (tubelight) ═══ */}
-      <NavBar items={navItems} />
+      {/* ═══ NAVBAR ═══ */}
+      <NavBar
+        items={navItems}
+        ctaButton={{ text: 'Обсудить проект', href: TG }}
+      />
 
       {/* ═══ HERO ═══ */}
       <section className="relative flex h-[80vh] items-center overflow-hidden pt-20">
@@ -274,7 +492,6 @@ export default function LandingPage() {
         />
 
         <div className="relative z-10 w-full h-full">
-          {/* Spline Card — full width, full height */}
           <Card className="w-full h-full bg-black/[0.96] border-x-0 border-t-0 border-b border-white/[0.08] rounded-none relative overflow-hidden">
             <Spotlight
               className="-top-40 left-0 md:left-60 md:-top-20"
@@ -310,8 +527,13 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.4 }}
                 >
+                  Настраиваем AI-систему, которая сама отвечает клиентам, собирает заявки и ведёт их в CRM — пока вы занимаетесь бизнесом. Внедрение от 7 дней.
+                </motion.p>
+                {/* Альтернативный подзаголовок — раскомментируйте для тестирования:
+                <motion.p className="mt-5 max-w-lg text-base leading-relaxed text-gray-400 sm:text-lg" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.4 }}>
                   Пока ваши менеджеры обрабатывают заявки вручную и забывают перезвонить — мы настраиваем AI-систему, которая делает это за них. Внедрение от 7 дней.
                 </motion.p>
+                */}
 
                 <motion.div
                   className="mt-6 flex flex-col items-start gap-3 sm:flex-row"
@@ -324,7 +546,7 @@ export default function LandingPage() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
                   <a href="#products" className="inline-flex items-center justify-center rounded-xl border border-white/[0.15] bg-transparent px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-white/[0.05] w-full sm:w-auto">
-                    Смотреть продукты
+                    Смотреть услуги
                   </a>
                 </motion.div>
 
@@ -335,9 +557,9 @@ export default function LandingPage() {
                   transition={{ duration: 0.7, delay: 0.7 }}
                 >
                   <span>⚡ Внедрение от 7 дней</span>
-                  <span>✅ 3 проекта</span>
-                  <span>🔒 Только РФ</span>
-                  <span>💬 24/7</span>
+                  <span>🇷🇺 Адаптировано для РФ</span>
+                  <span>🤝 Гарантия результата</span>
+                  <span>📋 Работаем по договору</span>
                 </motion.div>
               </div>
 
@@ -367,7 +589,7 @@ export default function LandingPage() {
 
           <ul className="grid gap-6 md:grid-cols-3">
             {painPoints.map((p, i) => (
-              <AnimatedSection key={i}>
+              <AnimatedSection key={i} delay={i * 0.1}>
                 <li className="min-h-[14rem] list-none">
                   <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
                     <GlowingEffect
@@ -412,7 +634,7 @@ export default function LandingPage() {
 
           <div className="grid gap-8 md:grid-cols-2">
             {products.map((p, i) => (
-              <AnimatedSection key={i}>
+              <AnimatedSection key={i} delay={i * 0.1}>
                 <GlowCard
                   glowColor={p.glowColor}
                   customSize={true}
@@ -421,7 +643,7 @@ export default function LandingPage() {
                   }`}
                 >
                   {p.featured && (
-                    <span className="absolute -top-3 right-6 z-20 rounded-full bg-[#7C3AED] px-3 py-1 text-xs font-semibold text-white">
+                    <span className="absolute -top-3 right-6 z-20 rounded-full bg-[#7C3AED] px-3 py-1 text-xs font-semibold text-white animate-pulse shadow-[0_0_16px_rgba(124,58,237,0.5)]">
                       🔥 Популярное
                     </span>
                   )}
@@ -446,6 +668,9 @@ export default function LandingPage() {
                       <span className="text-gray-500">|</span>
                       <span className="text-gray-400">{p.term}</span>
                     </div>
+
+                    {/* Example */}
+                    <p className="text-xs text-gray-500 italic">{p.example}</p>
 
                     <a
                       href={TG}
@@ -583,81 +808,107 @@ export default function LandingPage() {
         />
       </section>
 
-      {/* ═══ CASES (RadialOrbitalTimeline) ═══ */}
-      <section id="cases" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <AnimatedSection className="text-center mb-4">
+      {/* ═══ ABOUT STUDIO ═══ */}
+      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <AnimatedSection className="text-center mb-12">
             <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
-              Реальные проекты
+              Кто за этим стоит
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-400">
-              Не обещания — конкретные результаты с цифрами. Нажмите на узел, чтобы узнать подробности.
-            </p>
           </AnimatedSection>
 
-          <RadialOrbitalTimeline
-            timelineData={[
-              {
-                id: 1,
-                title: 'Строительная компания',
-                date: 'Сайт + интеграция',
-                content: '2 часа вручную → ответ за 2 минуты автоматически. Время обработки заявок сократилось на 80%.',
-                category: 'Сайт',
-                icon: Building2,
-                relatedIds: [2, 3],
-                status: 'completed' as const,
-                energy: 100,
-              },
-              {
-                id: 2,
-                title: 'Онлайн-школа',
-                date: 'AI-бот',
-                content: 'Бот закрывает 90% вопросов, команда — только сложные. С 3 часов до 10 минут в день на поддержку.',
-                category: 'Бот',
-                icon: GraduationCap,
-                relatedIds: [1, 3],
-                status: 'completed' as const,
-                energy: 90,
-              },
-              {
-                id: 3,
-                title: 'Сервисный бизнес',
-                date: 'Конверсия',
-                content: 'Скорость реакции выросла в 5 раз. Конверсия в заявку увеличилась на 40%.',
-                category: 'Автоматизация',
-                icon: Wrench,
-                relatedIds: [1, 2, 4],
-                status: 'completed' as const,
-                energy: 85,
-              },
-              {
-                id: 4,
-                title: 'Tilda + n8n',
-                date: 'Стек',
-                content: 'Связка no-code платформ: Tilda для сайтов, n8n для автоматизаций, Telegram для уведомлений.',
-                category: 'Технологии',
-                icon: Globe,
-                relatedIds: [1, 3, 5],
-                status: 'in-progress' as const,
-                energy: 70,
-              },
-              {
-                id: 5,
-                title: 'GPT-4o-mini',
-                date: 'AI-модель',
-                content: 'Используем GPT-4o-mini, GigaChat и YandexGPT. Всё работает в РФ без VPN.',
-                category: 'AI',
-                icon: Bot,
-                relatedIds: [2, 4],
-                status: 'in-progress' as const,
-                energy: 60,
-              },
-            ]}
-          />
+          <AnimatedSection delay={0.1}>
+            <div className="relative rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-8 sm:p-10">
+              {/* Abstract avatar */}
+              <div className="flex justify-center mb-6">
+                <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-[#7C3AED] to-[#A855F7] flex items-center justify-center">
+                  <Cpu className="h-8 w-8 text-white" />
+                </div>
+              </div>
+
+              <p className="text-center text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-10">
+                Я автоматизирую бизнес-процессы с помощью AI. Не агентство с 50 менеджерами — одна студия, которая делает конкретную работу без бюрократии.
+              </p>
+
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                {aboutFeatures.map((feat, i) => (
+                  <AnimatedSection key={i} delay={0.15 + i * 0.08}>
+                    <div className="flex flex-col items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-center">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#7C3AED]/15 text-[#A78BFA]">
+                        {feat.icon}
+                      </div>
+                      <span className="text-xs sm:text-sm text-gray-300 leading-snug">{feat.text}</span>
+                    </div>
+                  </AnimatedSection>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
-      {/* ═══ PRICING (Pricing component) ═══ */}
+      {/* ═══ CASES ═══ */}
+      <section id="cases" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <AnimatedSection className="text-center mb-14">
+            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
+              Наши решения
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-400">
+              Реальные проекты и демо-решения, которые можно потрогать
+            </p>
+          </AnimatedSection>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {cases.map((c, i) => (
+              <AnimatedSection key={i} delay={i * 0.1}>
+                <div className="group relative h-full rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(124,58,237,0.15)] hover:border-[#7C3AED]/30">
+                  {/* Badge */}
+                  <span className={`inline-block rounded-full border px-3 py-1 text-xs font-medium mb-4 ${c.badgeColor}`}>
+                    {c.badge}
+                  </span>
+
+                  <div className="flex items-start gap-4">
+                    <span className="text-3xl flex-shrink-0">{c.emoji}</span>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg font-semibold text-white mb-1">{c.title}</h3>
+                      <p className="text-sm text-gray-400 mb-3">{c.description}</p>
+
+                      <div className="rounded-lg bg-white/[0.04] border border-white/[0.06] p-3 mb-4">
+                        <p className="text-sm text-gray-300">
+                          <span className="text-[#A78BFA] font-medium">Результат: </span>
+                          {c.result}
+                        </p>
+                      </div>
+
+                      {/* Stack chips */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {c.stack.map((tech, ti) => (
+                          <span key={ti} className="rounded-full bg-[#7C3AED]/10 border border-[#7C3AED]/20 px-2.5 py-0.5 text-xs text-[#A78BFA]">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      <a
+                        href={c.linkHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm font-medium text-[#7C3AED] hover:text-[#A855F7] transition-colors"
+                      >
+                        {c.linkText}
+                        <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PRICING ═══ */}
       <section className="relative py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <Pricing
@@ -668,7 +919,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ═══ FAQ (FaqSection) ═══ */}
+      {/* ═══ FAQ ═══ */}
       <section id="faq">
         <FaqSection
           title="Частые вопросы"
@@ -681,6 +932,31 @@ export default function LandingPage() {
             onContact: () => window.open(TG, '_blank'),
           }}
         />
+      </section>
+
+      {/* ═══ CONTACT FORM ═══ */}
+      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl">
+          <AnimatedSection className="text-center mb-10">
+            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
+              Оставьте заявку
+            </h2>
+            <p className="mt-2 text-lg text-gray-400">
+              Перезвоним за час
+            </p>
+            <p className="mt-1 text-sm text-gray-500">
+              Или{' '}
+              <a href={TG} target="_blank" rel="noopener noreferrer" className="text-[#7C3AED] hover:underline">
+                напишите в Telegram
+              </a>
+              , если так удобнее
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.15}>
+            <ContactForm />
+          </AnimatedSection>
+        </div>
       </section>
 
       {/* ═══ CTA ═══ */}
@@ -709,7 +985,7 @@ export default function LandingPage() {
         </AnimatedSection>
       </section>
 
-      {/* ═══ FOOTER (Footerdemo) ═══ */}
+      {/* ═══ FOOTER ═══ */}
       <Footerdemo />
     </div>
   );

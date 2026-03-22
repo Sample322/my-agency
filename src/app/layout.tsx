@@ -7,10 +7,30 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+// TODO: Заменить [Название студии] и [домен] на реальные значения
+// TODO: Создать og-image.png 1200x630px и поместить в public/
 export const metadata: Metadata = {
-  title: "ПростыеСайты — AI-автоматизация для бизнеса",
+  metadataBase: new URL("https://example.com"), // TODO: Заменить на реальный домен
+  title: "AI-автоматизация для бизнеса — ПростыеСайты | Telegram-боты, CRM, n8n",
   description:
-    "Внедряем AI-ботов, автоматизацию продаж и сайты под ключ для малого и среднего бизнеса в РФ. Внедрение от 7 дней.",
+    "Настраиваем AI-ботов, автоматизируем продажи и создаём сайты-лидогенераторы для малого и среднего бизнеса в России. Внедрение от 7 дней. Первая консультация бесплатно.",
+  openGraph: {
+    title: "AI-автоматизация для бизнеса — ПростыеСайты",
+    description:
+      "Telegram-боты с AI, автоматизация продаж, сайты под ключ. Результат от 7 дней.",
+    type: "website",
+    // TODO: Заменить на реальный домен
+    url: "https://example.com",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  // TODO: Заменить на реальный домен
+  alternates: {
+    canonical: "https://example.com",
+  },
 };
 
 export default function RootLayout({
@@ -31,6 +51,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
+        {/* TODO: Добавить favicon — поместить favicon.ico в public/ */}
       </head>
       <body className="min-h-screen bg-[#0A0A0F]">{children}</body>
     </html>
