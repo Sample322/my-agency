@@ -64,8 +64,8 @@ function AnimatedSection({
 
 /* ─── Data ─── */
 
-// TODO: Заменить на реальный Telegram username
-const TG = 'https://t.me/PLACEHOLDER_USERNAME';
+const TG = 'https://t.me/l_lsamplel_l';
+const TG_USERNAME = '@l_lsamplel_l';
 
 const navItems = [
   { name: 'Услуги', url: '#products', icon: Package },
@@ -473,7 +473,7 @@ export default function LandingPage() {
       />
 
       {/* ═══ HERO ═══ */}
-      <section className="relative flex h-[80vh] items-center overflow-hidden pt-20">
+      <section className="relative flex min-h-[100svh] lg:h-[80vh] items-center overflow-hidden pt-20">
         {/* Dot grid */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.03]"
