@@ -565,7 +565,7 @@ export default function LandingPage() {
               </div>
 
               {/* Right content — 3D Spline */}
-              <div className="flex-1 relative min-h-[350px] lg:min-h-0">
+              <div className="flex-1 relative min-h-[500px] lg:min-h-0">
                 <SplineScene
                   scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                   className="w-full h-full"
@@ -934,68 +934,42 @@ export default function LandingPage() {
           title="Частые вопросы"
           description="Ответы на популярные вопросы о наших услугах"
           items={faqItems}
-          contactInfo={{
-            title: 'Остались вопросы?',
-            description: 'Напишите нам в Telegram — ответим в течение часа',
-            buttonText: 'Написать в Telegram',
-            onContact: () => window.open(TG, '_blank'),
-          }}
         />
       </section>
       </SmokeSection>
 
-      {/* ═══ CONTACT FORM ═══ */}
-      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl">
-          <AnimatedSection className="text-center mb-10">
-            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
-              Оставьте заявку
-            </h2>
-            <p className="mt-2 text-lg text-gray-400">
-              Перезвоним за час
-            </p>
-            <p className="mt-1 text-sm text-gray-500">
-              Или{' '}
-              <a href={TG} target="_blank" rel="noopener noreferrer" className="text-[#7C3AED] hover:underline">
-                напишите в Telegram
-              </a>
-              , если так удобнее
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection delay={0.15}>
-            <ContactForm />
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* ═══ CTA ═══ */}
-      <SmokeSection>
+      {/* ═══ CONTACT ═══ */}
       <section className="relative px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
         <AnimatedSection>
-          <div className="mx-auto max-w-4xl rounded-3xl bg-[#7C3AED] px-6 py-16 text-center sm:px-12 sm:py-20">
-            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
-              Разберём вашу задачу бесплатно
+          <div className="mx-auto max-w-2xl rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm px-6 py-12 text-center sm:px-12 sm:py-16">
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#7C3AED]/20 mb-5">
+              <Send className="h-6 w-6 text-[#7C3AED]" />
+            </div>
+            <h2 className="text-2xl font-bold sm:text-3xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
+              Обсудим ваш проект?
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-white/80">
-              30 минут — без обязательств
+            <p className="mx-auto mt-3 max-w-md text-gray-400">
+              Первая консультация — бесплатно. Разберём задачу за 30 минут, без обязательств.
             </p>
-            <a
-              href={TG}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center justify-center rounded-xl bg-white px-8 py-4 text-base font-semibold text-[#0A0A0F] transition-colors hover:bg-gray-100"
-            >
-              Написать в Telegram
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </a>
-            <p className="mt-4 text-sm text-white/60">
-              Обычно отвечаем в течение часа
+
+            <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <a
+                href={TG}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[#6D28D9] w-full sm:w-auto"
+              >
+                Написать в Telegram
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+
+            <p className="mt-4 text-sm text-gray-500">
+              Telegram: <a href={TG} target="_blank" rel="noopener noreferrer" className="text-[#7C3AED] hover:underline">{TG_USERNAME}</a> · Обычно отвечаем в течение часа
             </p>
           </div>
         </AnimatedSection>
       </section>
-      </SmokeSection>
 
       {/* ═══ FOOTER ═══ */}
       <Footerdemo />
