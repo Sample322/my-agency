@@ -128,7 +128,10 @@ export function Pricing({
                 ? "z-0 transform translate-x-0 translate-y-0 -translate-z-[50px] rotate-y-[10deg]"
                 : "z-10",
               index === 0 && "origin-right",
-              index === 2 && "origin-left"
+              index === 2 && "origin-left",
+              "transition-all duration-500 ease-out",
+              "hover:shadow-[0_0_30px_rgba(124,58,237,0.15),0_0_60px_rgba(124,58,237,0.08)]",
+              "hover:border-[#7C3AED]/40"
             )}
           >
             {plan.isPopular && (

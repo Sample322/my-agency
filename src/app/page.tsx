@@ -473,7 +473,7 @@ export default function LandingPage() {
       />
 
       {/* ═══ HERO ═══ */}
-      <section className="relative flex min-h-[100svh] lg:h-[80vh] items-center overflow-hidden pt-20">
+      <section id="hero" className="relative flex min-h-[100svh] lg:h-[80vh] items-center overflow-hidden pt-20">
         {/* Dot grid */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.03]"
@@ -542,7 +542,7 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.55 }}
                 >
-                  <a href={TG} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[#6D28D9] w-full sm:w-auto">
+                  <a href={TG} target="_blank" rel="noopener noreferrer" aria-label="Обсудить проект бесплатно в Telegram" className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[#6D28D9] w-full sm:w-auto">
                     Обсудить проект бесплатно
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
@@ -580,7 +580,7 @@ export default function LandingPage() {
 
       {/* ═══ PAIN POINTS (GlowingEffect) ═══ */}
       <SmokeSection>
-      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+      <section id="pain-points" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <AnimatedSection className="text-center mb-14">
             <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
@@ -593,8 +593,8 @@ export default function LandingPage() {
 
           <ul className="grid gap-6 md:grid-cols-3">
             {painPoints.map((p, i) => (
-              <AnimatedSection key={i} delay={i * 0.1}>
-                <li className="min-h-[14rem] list-none">
+              <AnimatedSection key={i} delay={i * 0.1} className="h-full">
+                <li className="min-h-[14rem] list-none h-full">
                   <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
                     <GlowingEffect
                       spread={40}
@@ -639,11 +639,11 @@ export default function LandingPage() {
 
           <div className="grid gap-8 md:grid-cols-2">
             {products.map((p, i) => (
-              <AnimatedSection key={i} delay={i * 0.1}>
+              <AnimatedSection key={i} delay={i * 0.1} className="h-full">
                 <GlowCard
                   glowColor={p.glowColor}
                   customSize={true}
-                  className={`!aspect-auto !grid-rows-none !shadow-none ${
+                  className={`!aspect-auto !grid-rows-none !shadow-none h-full ${
                     p.featured ? 'ring-2 ring-[#7C3AED]/60' : ''
                   }`}
                 >
@@ -816,7 +816,7 @@ export default function LandingPage() {
       </SmokeSection>
 
       {/* ═══ ABOUT STUDIO ═══ */}
-      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+      <section id="about" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
           <AnimatedSection className="text-center mb-12">
             <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
@@ -869,7 +869,7 @@ export default function LandingPage() {
 
           <div className="grid gap-6 md:grid-cols-2">
             {cases.map((c, i) => (
-              <AnimatedSection key={i} delay={i * 0.1}>
+              <AnimatedSection key={i} delay={i * 0.1} className="h-full">
                 <div className="group relative h-full rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(124,58,237,0.15)] hover:border-[#7C3AED]/30">
                   {/* Badge */}
                   <span className={`inline-block rounded-full border px-3 py-1 text-xs font-medium mb-4 ${c.badgeColor}`}>
@@ -919,7 +919,7 @@ export default function LandingPage() {
       </SmokeSection>
 
       {/* ═══ PRICING ═══ */}
-      <section className="relative py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
+      <section id="pricing" className="relative py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <Pricing
             plans={pricingPlans}
@@ -941,7 +941,7 @@ export default function LandingPage() {
       </SmokeSection>
 
       {/* ═══ CONTACT ═══ */}
-      <section className="relative px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <section id="contact" className="relative px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
         <AnimatedSection>
           <div className="mx-auto max-w-2xl rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm px-6 py-12 text-center sm:px-12 sm:py-16">
             <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#7C3AED]/20 mb-5">
