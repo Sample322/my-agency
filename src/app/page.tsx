@@ -565,7 +565,7 @@ export default function LandingPage() {
               </div>
 
               {/* Right content — 3D Spline */}
-              <div className="flex-1 relative min-h-[500px] lg:min-h-0">
+              <div className="flex-1 relative min-h-[300px] lg:min-h-0">
                 <SplineScene
                   scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                   className="w-full h-full"
