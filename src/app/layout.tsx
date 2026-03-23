@@ -84,10 +84,10 @@ const jsonLd = {
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "sales",
-    url: "https://t.me/l_lsamplel_l",
+    url: "https://t.me/ivan_ai_studio_bot",
     availableLanguage: "Russian",
   },
-  sameAs: ["https://t.me/l_lsamplel_l"],
+  sameAs: ["https://t.me/ivan_ai_studio_bot"],
 };
 
 export default function RootLayout({

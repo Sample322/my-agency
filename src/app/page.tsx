@@ -64,8 +64,7 @@ function AnimatedSection({
 
 /* ─── Data ─── */
 
-const TG = 'https://t.me/l_lsamplel_l';
-const TG_USERNAME = '@l_lsamplel_l';
+import { DEEP_LINKS, PERSONAL_LINK, PERSONAL_USERNAME } from '@/lib/telegram';
 
 const navItems = [
   { name: 'Услуги', url: '#products', icon: Package },
@@ -111,6 +110,7 @@ const products = [
     term: '5–7 дней',
     featured: false,
     glowColor: 'blue' as const,
+    deepLink: DEEP_LINKS.service_aibot,
   },
   {
     icon: <Zap className="h-7 w-7" />,
@@ -127,6 +127,7 @@ const products = [
     term: '7–14 дней',
     featured: false,
     glowColor: 'green' as const,
+    deepLink: DEEP_LINKS.service_automation,
   },
   {
     icon: <Globe className="h-7 w-7" />,
@@ -143,6 +144,7 @@ const products = [
     term: '7–10 дней',
     featured: true,
     glowColor: 'purple' as const,
+    deepLink: DEEP_LINKS.service_site,
   },
   {
     icon: <BarChart3 className="h-7 w-7" />,
@@ -159,6 +161,7 @@ const products = [
     term: '5–7 дней',
     featured: false,
     glowColor: 'orange' as const,
+    deepLink: DEEP_LINKS.service_content,
   },
 ];
 
@@ -179,7 +182,7 @@ const cases = [
     result: 'Сайт приводит целевые заявки, интегрирован с рекламными кампаниями',
     stack: ['Tilda', 'Яндекс.Директ'],
     linkText: 'Подробнее',
-    linkHref: TG,
+    linkHref: DEEP_LINKS.case_construction,
   },
   {
     badge: 'Реальный проект',
@@ -190,7 +193,7 @@ const cases = [
     result: 'Оптимизированные тексты и структура для повышения конверсии',
     stack: ['Tilda', 'Яндекс.Директ'],
     linkText: 'Подробнее',
-    linkHref: TG,
+    linkHref: DEEP_LINKS.case_videoproduction,
   },
   {
     badge: 'Демо',
@@ -200,9 +203,8 @@ const cases = [
     description: 'Telegram-бот: запись, FAQ, квалификация',
     result: 'Время разработки: 3 дня',
     stack: ['n8n', 'GPT-4o-mini', 'Telegram API'],
-    // TODO: Заменить на реальную ссылку на демо-бота
     linkText: 'Попробовать бота',
-    linkHref: TG,
+    linkHref: DEEP_LINKS.case_demo_dental,
   },
   {
     badge: 'Демо',
@@ -213,7 +215,7 @@ const cases = [
     result: 'Заявка обработана за 30 секунд без участия менеджера',
     stack: ['n8n', 'Telegram API', 'Google Sheets'],
     linkText: 'Смотреть как работает',
-    linkHref: TG,
+    linkHref: DEEP_LINKS.case_demo_automation,
   },
 ];
 
@@ -258,7 +260,7 @@ const pricingPlans = [
     ],
     description: 'Базовая поддержка для одного решения',
     buttonText: 'Начать',
-    href: TG,
+    href: DEEP_LINKS.tariff_lite,
     isPopular: false,
   },
   {
@@ -275,7 +277,7 @@ const pricingPlans = [
     ],
     description: 'Полное сопровождение для растущего бизнеса',
     buttonText: 'Выбрать',
-    href: TG,
+    href: DEEP_LINKS.tariff_standard,
     isPopular: true,
   },
   {
@@ -292,7 +294,7 @@ const pricingPlans = [
     ],
     description: 'Для компаний с высокой нагрузкой',
     buttonText: 'Связаться',
-    href: TG,
+    href: DEEP_LINKS.tariff_business,
     isPopular: false,
   },
 ];
@@ -469,7 +471,7 @@ export default function LandingPage() {
       {/* ═══ NAVBAR ═══ */}
       <NavBar
         items={navItems}
-        ctaButton={{ text: 'Обсудить проект', href: TG }}
+        ctaButton={{ text: 'Обсудить проект', href: DEEP_LINKS.nav_cta }}
       />
 
       {/* ═══ HERO ═══ */}
@@ -542,7 +544,7 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.55 }}
                 >
-                  <a href={TG} target="_blank" rel="noopener noreferrer" aria-label="Обсудить проект бесплатно в Telegram" className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[#6D28D9] w-full sm:w-auto">
+                  <a href={DEEP_LINKS.hero_cta} target="_blank" rel="noopener noreferrer" aria-label="Обсудить проект бесплатно в Telegram" className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[#6D28D9] w-full sm:w-auto">
                     Обсудить проект бесплатно
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
@@ -678,7 +680,7 @@ export default function LandingPage() {
                     <p className="text-xs text-gray-500 italic">{p.example}</p>
 
                     <a
-                      href={TG}
+                      href={p.deepLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`inline-flex w-full items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition-colors ${
@@ -799,7 +801,7 @@ export default function LandingPage() {
                     Что-то сломалось — исправим за рабочий день. Остаёмся на связи и помогаем масштабировать.
                   </p>
                   <a
-                    href={TG}
+                    href={DEEP_LINKS.process_cta}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-6 py-3 text-sm font-semibold transition-colors hover:bg-[#6D28D9]"
@@ -956,7 +958,7 @@ export default function LandingPage() {
 
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <a
-                href={TG}
+                href={DEEP_LINKS.final_cta}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[#6D28D9] w-full sm:w-auto"
@@ -967,7 +969,7 @@ export default function LandingPage() {
             </div>
 
             <p className="mt-4 text-sm text-gray-500">
-              Telegram: <a href={TG} target="_blank" rel="noopener noreferrer" className="text-[#7C3AED] hover:underline">{TG_USERNAME}</a> · Обычно отвечаем в течение часа
+              Telegram: <a href={DEEP_LINKS.final_cta} target="_blank" rel="noopener noreferrer" className="text-[#7C3AED] hover:underline">{PERSONAL_USERNAME}</a> · Обычно отвечаем в течение часа
             </p>
           </div>
         </AnimatedSection>

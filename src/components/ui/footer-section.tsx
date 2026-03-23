@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Send } from "lucide-react"
+import { DEEP_LINKS, PERSONAL_USERNAME } from "@/lib/telegram"
 
 function Footerdemo() {
   return (
@@ -28,13 +29,13 @@ function Footerdemo() {
           {/* Contacts */}
           <div className="flex flex-col items-center gap-2 text-sm text-gray-400 sm:flex-row sm:gap-6">
             <a
-              href="https://t.me/l_lsamplel_l"
+              href={DEEP_LINKS.footer_cta}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 transition-colors hover:text-[#7C3AED]"
             >
               <Send className="h-3.5 w-3.5" />
-              Telegram: @l_lsamplel_l
+              Telegram: {PERSONAL_USERNAME}
             </a>
             <a
               href="mailto:hello@example.com"
