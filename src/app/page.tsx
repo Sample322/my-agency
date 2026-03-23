@@ -565,11 +565,13 @@ export default function LandingPage() {
               </div>
 
               {/* Right content — 3D Spline */}
-              <div className="flex-1 relative min-h-[300px] lg:min-h-0">
-                <SplineScene
-                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                  className="w-full h-full"
-                />
+              <div className="flex-1 relative min-h-[350px] lg:min-h-0 overflow-hidden -mb-24 lg:mb-0">
+                <div className="w-full h-full scale-[1.15] lg:scale-100 translate-y-0">
+                  <SplineScene
+                    scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                    className="w-full h-full"
+                  />
+                </div>
               </div>
             </div>
           </Card>
