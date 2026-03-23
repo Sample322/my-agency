@@ -35,6 +35,7 @@ import { Timeline } from '@/components/ui/timeline';
 import { SplineScene } from '@/components/ui/splite';
 import { Spotlight } from '@/components/ui/spotlight';
 import { Card } from '@/components/ui/card';
+import { SmokeSection } from '@/components/ui/smoke-background';
 
 /* ─── Animated Section wrapper ─── */
 function AnimatedSection({
@@ -576,6 +577,7 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ PAIN POINTS (GlowingEffect) ═══ */}
+      <SmokeSection>
       <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <AnimatedSection className="text-center mb-14">
@@ -619,6 +621,7 @@ export default function LandingPage() {
           </ul>
         </div>
       </section>
+      </SmokeSection>
 
       {/* ═══ PRODUCTS (GlowCard / spotlight-card) ═══ */}
       <section id="products" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
@@ -694,6 +697,7 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ HOW WE WORK (Timeline) ═══ */}
+      <SmokeSection>
       <section id="how" className="relative py-20 sm:py-28">
         <div className="max-w-7xl mx-auto py-10 px-4 md:px-8 lg:px-10">
           <h2
@@ -807,6 +811,7 @@ export default function LandingPage() {
           ]}
         />
       </section>
+      </SmokeSection>
 
       {/* ═══ ABOUT STUDIO ═══ */}
       <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
@@ -848,6 +853,7 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ CASES ═══ */}
+      <SmokeSection>
       <section id="cases" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <AnimatedSection className="text-center mb-14">
@@ -908,6 +914,8 @@ export default function LandingPage() {
         </div>
       </section>
 
+      </SmokeSection>
+
       {/* ═══ PRICING ═══ */}
       <section className="relative py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
@@ -920,7 +928,8 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ FAQ ═══ */}
-      <section id="faq">
+      <SmokeSection>
+      <section id="faq" className="relative">
         <FaqSection
           title="Частые вопросы"
           description="Ответы на популярные вопросы о наших услугах"
@@ -933,6 +942,7 @@ export default function LandingPage() {
           }}
         />
       </section>
+      </SmokeSection>
 
       {/* ═══ CONTACT FORM ═══ */}
       <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
@@ -960,7 +970,8 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ CTA ═══ */}
-      <section className="px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <SmokeSection>
+      <section className="relative px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
         <AnimatedSection>
           <div className="mx-auto max-w-4xl rounded-3xl bg-[#7C3AED] px-6 py-16 text-center sm:px-12 sm:py-20">
             <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
@@ -984,6 +995,7 @@ export default function LandingPage() {
           </div>
         </AnimatedSection>
       </section>
+      </SmokeSection>
 
       {/* ═══ FOOTER ═══ */}
       <Footerdemo />
