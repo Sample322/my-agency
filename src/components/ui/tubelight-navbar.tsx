@@ -53,7 +53,7 @@ export function NavBar({ items, className, ctaButton }: NavBarProps) {
               href={item.url}
               onClick={() => setActiveTab(item.name)}
               className={cn(
-                "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
+                "relative cursor-pointer text-sm font-semibold px-6 py-2 min-h-[44px] flex items-center rounded-full transition-colors",
                 "text-foreground/80 hover:text-primary",
                 isActive && "bg-muted text-primary",
               )}
@@ -88,7 +88,7 @@ export function NavBar({ items, className, ctaButton }: NavBarProps) {
             href={ctaButton.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:inline-flex items-center rounded-full bg-[#7C3AED] px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-[#6D28D9] hover:scale-105"
+            className="hidden md:inline-flex items-center rounded-full bg-[#7C3AED] px-5 py-2 min-h-[44px] text-sm font-semibold text-white transition-all hover:bg-[#6D28D9] hover:scale-105"
           >
             {ctaButton.text}
           </a>

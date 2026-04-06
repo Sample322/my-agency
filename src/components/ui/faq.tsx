@@ -97,6 +97,8 @@ const FaqItem = React.forwardRef<
 >((props, ref) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const { question, answer, index } = props;
+  const answerId = `faq-answer-${index}`;
+  const triggerId = `faq-trigger-${index}`;
 
   return (
     <motion.div
@@ -116,7 +118,10 @@ const FaqItem = React.forwardRef<
       <Button
         variant="ghost"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 h-auto justify-between hover:bg-transparent"
+        className="w-full px-6 py-4 h-auto min-h-[44px] justify-between hover:bg-transparent"
+        aria-expanded={isOpen}
+        aria-controls={answerId}
+        id={triggerId}
       >
         <h3
           className={cn(
@@ -156,6 +161,9 @@ const FaqItem = React.forwardRef<
               opacity: 0,
               transition: { duration: 0.2, ease: "easeIn" },
             }}
+            id={answerId}
+            role="region"
+            aria-labelledby={triggerId}
           >
             <div className="px-6 pb-4 pt-2">
               <motion.p

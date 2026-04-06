@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight,
@@ -23,6 +23,7 @@ import {
   Trophy,
   Film,
   Cpu,
+  ChevronUp,
 } from 'lucide-react';
 
 import { NavBar } from '@/components/ui/tubelight-navbar';
@@ -463,6 +464,34 @@ function ContactForm() {
   );
 }
 
+/* ─── Scroll to top ─── */
+function ScrollToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-20 sm:bottom-8 right-4 sm:right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full bg-[#7C3AED] text-white shadow-lg transition-colors hover:bg-[#6D28D9]"
+          aria-label="Наверх"
+        >
+          <ChevronUp className="h-5 w-5" />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+}
+
 /* ─── Page ─── */
 
 export default function LandingPage() {
@@ -544,11 +573,12 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.55 }}
                 >
-                  <a href={DEEP_LINKS.hero_cta} target="_blank" rel="noopener noreferrer" aria-label="Обсудить проект бесплатно в Telegram" className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[#6D28D9] w-full sm:w-auto">
+                  <a href={DEEP_LINKS.hero_cta} target="_blank" rel="noopener noreferrer" aria-label="Обсудить проект бесплатно в Telegram" className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[#6D28D9] shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] min-h-[44px] w-full sm:w-auto">
+                    <Send className="mr-2 h-4 w-4" />
                     Обсудить проект бесплатно
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
-                  <a href="#products" className="inline-flex items-center justify-center rounded-xl border border-white/[0.15] bg-transparent px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-white/[0.05] w-full sm:w-auto">
+                  <a href="#products" className="inline-flex items-center justify-center rounded-xl border border-white/[0.15] bg-transparent px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-white/[0.05] text-gray-300 hover:text-white min-h-[44px] w-full sm:w-auto">
                     Смотреть услуги
                   </a>
                 </motion.div>
@@ -654,7 +684,7 @@ export default function LandingPage() {
                       🔥 Популярное
                     </span>
                   )}
-                  <div className="relative z-10 flex flex-col gap-4 p-2">
+                  <div className="relative z-10 flex flex-col h-full gap-4 p-2">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#7C3AED]/20 text-[#7C3AED]">
                       {p.icon}
                     </div>
@@ -683,14 +713,14 @@ export default function LandingPage() {
                       href={p.deepLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-flex w-full items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition-colors ${
+                      className={`mt-auto inline-flex w-full items-center justify-center rounded-xl px-6 py-3 min-h-[44px] text-sm font-semibold transition-colors ${
                         p.featured
-                          ? 'bg-[#7C3AED] hover:bg-[#6D28D9] text-white'
+                          ? 'bg-[#7C3AED] hover:bg-[#6D28D9] text-white shadow-[0_0_16px_rgba(124,58,237,0.3)]'
                           : 'bg-white/[0.06] hover:bg-white/[0.1] text-white'
                       }`}
                     >
+                      <Send className="mr-2 h-4 w-4" />
                       Обсудить
-                      <MessageCircle className="ml-2 h-4 w-4" />
                     </a>
                   </div>
                 </GlowCard>
@@ -804,8 +834,9 @@ export default function LandingPage() {
                     href={DEEP_LINKS.process_cta}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-6 py-3 text-sm font-semibold transition-colors hover:bg-[#6D28D9]"
+                    className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-6 py-3 min-h-[44px] text-sm font-semibold transition-colors hover:bg-[#6D28D9]"
                   >
+                    <Send className="mr-2 h-4 w-4" />
                     Обсудить проект
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
@@ -961,8 +992,9 @@ export default function LandingPage() {
                 href={DEEP_LINKS.final_cta}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[#6D28D9] w-full sm:w-auto"
+                className="inline-flex items-center justify-center rounded-xl bg-[#7C3AED] px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[#6D28D9] shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] min-h-[44px] w-full sm:w-auto"
               >
+                <Send className="mr-2 h-4 w-4" />
                 Написать в Telegram
                 <ArrowRight className="ml-2 h-4 w-4" />
               </a>
@@ -977,6 +1009,9 @@ export default function LandingPage() {
 
       {/* ═══ FOOTER ═══ */}
       <Footerdemo />
+
+      {/* ═══ SCROLL TO TOP ═══ */}
+      <ScrollToTop />
     </div>
   );
 }

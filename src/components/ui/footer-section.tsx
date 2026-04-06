@@ -17,13 +17,13 @@ function Footerdemo() {
 
           {/* Nav links */}
           <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-400">
-            <a href="#products" className="transition-colors hover:text-white">Услуги</a>
-            <span className="hidden sm:inline text-white/20">|</span>
-            <a href="#how" className="transition-colors hover:text-white">Процесс</a>
-            <span className="hidden sm:inline text-white/20">|</span>
-            <a href="#cases" className="transition-colors hover:text-white">Кейсы</a>
-            <span className="hidden sm:inline text-white/20">|</span>
-            <a href="#faq" className="transition-colors hover:text-white">FAQ</a>
+            <a href="#products" className="inline-flex items-center min-h-[44px] transition-colors hover:text-white">Услуги</a>
+            <span className="hidden sm:inline text-white/20 self-center">|</span>
+            <a href="#how" className="inline-flex items-center min-h-[44px] transition-colors hover:text-white">Процесс</a>
+            <span className="hidden sm:inline text-white/20 self-center">|</span>
+            <a href="#cases" className="inline-flex items-center min-h-[44px] transition-colors hover:text-white">Кейсы</a>
+            <span className="hidden sm:inline text-white/20 self-center">|</span>
+            <a href="#faq" className="inline-flex items-center min-h-[44px] transition-colors hover:text-white">FAQ</a>
           </nav>
 
           {/* Contacts */}
@@ -38,10 +38,12 @@ function Footerdemo() {
               Telegram: {PERSONAL_USERNAME}
             </a>
             <a
-              href="mailto:hello@example.com"
+              href={DEEP_LINKS.footer_cta}
+              target="_blank"
+              rel="noopener noreferrer"
               className="transition-colors hover:text-[#7C3AED]"
             >
-              Email: hello@example.com
+              Написать нам
             </a>
           </div>
         </div>
