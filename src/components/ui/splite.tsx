@@ -12,15 +12,8 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
   const [shouldLoad, setShouldLoad] = useState(false)
 
   useEffect(() => {
-    // Defer Spline loading until after LCP / idle time
-    if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(() => setShouldLoad(true), {
-        timeout: 3000,
-      })
-      return () => window.cancelIdleCallback(id)
-    }
-    // Fallback: load after 1.5s
-    const timer = setTimeout(() => setShouldLoad(true), 1500)
+    // Small delay to let LCP paint first, then load Spline
+    const timer = setTimeout(() => setShouldLoad(true), 100)
     return () => clearTimeout(timer)
   }, [])
 
