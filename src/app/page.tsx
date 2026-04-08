@@ -541,7 +541,7 @@ export default function LandingPage() {
 
                 <motion.h1
                   className="mt-6 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl xl:text-6xl"
-                  style={{ fontFamily: "'Unbounded', sans-serif" }}
+                  style={{ fontFamily: "var(--font-unbounded), sans-serif" }}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.25 }}
@@ -615,7 +615,7 @@ export default function LandingPage() {
       <section id="pain-points" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <AnimatedSection className="text-center mb-14">
-            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
+            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "var(--font-unbounded), sans-serif" }}>
               Это точно про вас?
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-400">
@@ -661,7 +661,7 @@ export default function LandingPage() {
       <section id="products" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <AnimatedSection className="text-center mb-14">
-            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
+            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "var(--font-unbounded), sans-serif" }}>
               Что именно мы делаем
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-400">
@@ -736,7 +736,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto py-10 px-4 md:px-8 lg:px-10">
           <h2
             className="text-3xl font-bold sm:text-4xl lg:text-5xl mb-4 text-white max-w-4xl"
-            style={{ fontFamily: "'Unbounded', sans-serif" }}
+            style={{ fontFamily: "var(--font-unbounded), sans-serif" }}
           >
             Как это происходит
           </h2>
@@ -852,7 +852,7 @@ export default function LandingPage() {
       <section id="about" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
           <AnimatedSection className="text-center mb-12">
-            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
+            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "var(--font-unbounded), sans-serif" }}>
               Кто за этим стоит
             </h2>
           </AnimatedSection>
@@ -892,7 +892,7 @@ export default function LandingPage() {
       <section id="cases" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <AnimatedSection className="text-center mb-14">
-            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
+            <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl" style={{ fontFamily: "var(--font-unbounded), sans-serif" }}>
               Наши решения
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-400">
@@ -980,7 +980,7 @@ export default function LandingPage() {
             <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#7C3AED]/20 mb-5">
               <Send className="h-6 w-6 text-[#7C3AED]" />
             </div>
-            <h2 className="text-2xl font-bold sm:text-3xl" style={{ fontFamily: "'Unbounded', sans-serif" }}>
+            <h2 className="text-2xl font-bold sm:text-3xl" style={{ fontFamily: "var(--font-unbounded), sans-serif" }}>
               Обсудим ваш проект?
             </h2>
             <p className="mx-auto mt-3 max-w-md text-gray-400">

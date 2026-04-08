@@ -11,7 +11,7 @@ function Footerdemo() {
         {/* Top row */}
         <div className="flex flex-col items-center gap-6 text-center">
           {/* Logo / Name */}
-          <a href="#" className="text-xl font-bold" style={{ fontFamily: "'Unbounded', sans-serif" }}>
+          <a href="#" className="text-xl font-bold" style={{ fontFamily: "var(--font-unbounded), sans-serif" }}>
             Простые<span className="text-[#7C3AED]">Сайты</span>
           </a>
 
